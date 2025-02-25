@@ -1,0 +1,40 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:PXSwiftGen}",
+            "name": "Debug swiftgen",
+            "program": "${workspaceFolder:PXSwiftGen}/.build/debug/swiftgen",
+            "preLaunchTask": "swift: Build Debug swiftgen"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:PXSwiftGen}",
+            "name": "Release swiftgen",
+            "program": "${workspaceFolder:PXSwiftGen}/.build/release/swiftgen",
+            "preLaunchTask": "swift: Build Release swiftgen"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:PXSwiftGen}",
+            "name": "Debug pxswiftgen",
+            "program": "${workspaceFolder:PXSwiftGen}/.build/debug/pxswiftgen",
+            "preLaunchTask": "swift: Build Debug pxswiftgen"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:PXSwiftGen}",
+            "name": "Release pxswiftgen",
+            "program": "${workspaceFolder:PXSwiftGen}/.build/release/pxswiftgen",
+            "preLaunchTask": "swift: Build Release pxswiftgen"
+        }
+    ]
+}

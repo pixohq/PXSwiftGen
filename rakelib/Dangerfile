@@ -67,9 +67,8 @@ end
 # rubocop:enable Style/IfUnlessModifier
 
 # Check if DEPENDENCIES needs changes
-swiftgenkit_podspec_changed = git.modified_files.include?('SwiftGenKit.podspec')
 dependencies_doc_changed = git.modified_files.include?('DEPENDENCIES.md')
-if package_changed || swiftgenkit_podspec_changed || dependencies_doc_changed
+if package_changed || dependencies_doc_changed
   stdout, _, status = Open3.capture3('bundle', 'exec', 'rake', 'dependencies:check[true]')
   unless status.success?
     stdout.lines.each do |message|

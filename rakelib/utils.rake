@@ -36,24 +36,6 @@ class Utils
 
   ## [ Convenience Helpers ] ##################################################
 
-  def self.podspec_as_json(file)
-    file += '.podspec' unless file.include?('.podspec')
-    json, _, _ = Open3.capture3('bundle', 'exec', 'pod', 'ipc', 'spec', file)
-    JSON.parse(json)
-  end
-
-  def self.podspec_version(file)
-    podspec_as_json(file)['version']
-  end
-
-  def self.pod_trunk_last_version(pod)
-    require 'yaml'
-    stdout, _, _ = Open3.capture3('bundle', 'exec', 'pod', 'trunk', 'info', pod)
-    stdout.sub!("\n#{pod}\n", '').gsub!(/ \(\d+-\d+-\d+ \d+:\d+:\d+ .+\)/, '')
-    versions = YAML.safe_load(stdout).first['Versions']
-    versions.sort_by { |v| Gem::Version.new(v) }.last
-  end
-
   def self.spm_own_version(dep)
     dependencies = JSON.load(File.new('Package.resolved'))['pins']
     dependencies.find { |d| d['identity'] == dep.downcase }['state']['version']

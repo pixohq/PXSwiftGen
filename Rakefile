@@ -12,54 +12,53 @@ end
 
 ## [ Constants ] ##############################################################
 
-POD_NAME = 'SwiftGen'
 MIN_XCODE_VERSION = 13.0
 BUILD_DIR = File.absolute_path('./.build')
 
 ## [ Build Tasks ] ############################################################
 
 namespace :cli do
-  desc "Build the CLI binary\n" \
+  desc "바이너리 빌드\n" \
     "(in #{BUILD_DIR})"
   task :build, %[universal] do |task, args|
     args.with_defaults(universal: false)
 
-    Utils.print_header 'Building Binary'
+    Utils.print_header '바이너리 빌드 중'
     archs = args.universal ? '--arch arm64 --arch x86_64' : ''
     Utils.run(%(swift build --disable-sandbox -c release #{archs}), task, xcrun: true, formatter: :raw)
   end
 
-  desc "Install the binary in $bindir\n" \
-       "(defaults $bindir=#{BUILD_DIR}/swiftgen/bin/)"
+  desc "바이너리를 $bindir에 설치\n" \
+       "(기본값 $bindir=#{BUILD_DIR}/pxswiftgen/bin/)"
   task :install, %i[bindir universal] => :build do |task, args|
-    args.with_defaults(bindir: "#{BUILD_DIR}/swiftgen/bin/", universal: false)
+    args.with_defaults(bindir: "#{BUILD_DIR}/pxswiftgen/bin/", universal: false)
 
     bindir = Pathname.new(args.bindir).expand_path
     actual_build_dir = args.universal ? "#{BUILD_DIR}/apple/Products/Release" : "#{BUILD_DIR}/release"
     generated_binary_path = "#{actual_build_dir}/swiftgen"
     generated_bundle_path = "#{actual_build_dir}/SwiftGen_SwiftGenCLI.bundle"
 
-    Utils.print_header "Installing binary in #{bindir}"
+    Utils.print_header "바이너리 설치 중: #{bindir}"
     Utils.run([
                 %(mkdir -p "#{bindir}"),
-                %(cp -f "#{generated_binary_path}" "#{bindir}/"),
-                %(cp -Rf "#{generated_bundle_path}" "#{bindir}/")
+                %(cp -f "#{generated_binary_path}" "#{bindir}/pxswiftgen"),
+                %(cp -Rf "#{generated_bundle_path}" "#{bindir}/PXSwiftGen_SwiftGenCLI.bundle")
               ], task, 'copy_binary')
 
-    Utils.print_info "Finished installing. Binary is available in: #{bindir}"
+    Utils.print_info "설치 완료. 바이너리 위치: #{bindir}"
   end
 
-  desc "Delete the build directory\n" \
+  desc "빌드 디렉토리 삭제\n" \
     "(#{BUILD_DIR})"
   task :clean do
-    sh %(rm -fr #{BUILD_DIR}/swiftgen)
+    sh %(rm -fr #{BUILD_DIR}/pxswiftgen)
   end
 
-  desc "Test the binary in $bindir\n" \
-       "(defaults $bindir=#{BUILD_DIR}/swiftgen/bin/)"
+  desc "바이너리 테스트 실행\n" \
+       "(기본값 $bindir=#{BUILD_DIR}/pxswiftgen/bin/)"
   task :test, %i[bindir universal] => :install do |task, args|
-    args.with_defaults(bindir: "#{BUILD_DIR}/swiftgen/bin/", universal: false)
-    swiftgen = Pathname.new(args.bindir).expand_path + "swiftgen"
+    args.with_defaults(bindir: "#{BUILD_DIR}/pxswiftgen/bin/", universal: false)
+    swiftgen = Pathname.new(args.bindir).expand_path + "pxswiftgen"
 
     tests = {
       colors:   {template: 'swift5',            resource_group: 'Colors',   generated: 'defaults.swift',    fixture: 'colors.xml'},
@@ -83,7 +82,7 @@ namespace :cli do
       results << Utils.table_result(
         output == generated,
         command.to_s,
-        %Q(swiftgen run #{command} --templateName #{info[:template]} #{info[:params]} Sources/TestUtils/Fixtures/Resources/#{info[:resource_group]}/#{info[:fixture]})
+        %Q(pxswiftgen run #{command} --templateName #{info[:template]} #{info[:params]} Sources/TestUtils/Fixtures/Resources/#{info[:resource_group]}/#{info[:fixture]})
       )
     end
 

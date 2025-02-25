@@ -1,5 +1,5 @@
 // swiftlint:disable all
-// Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
+// Generated using PXSwiftGen - https://github.com/pixohq/PXSwiftGen
 
 {% if catalogs %}
 {% macro hasValuesBlock assets filter %}

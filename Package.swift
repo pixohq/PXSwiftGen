@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-  name: "SwiftGen",
+  name: "PXSwiftGen",
   platforms: [
     .macOS(.v10_11),
   ],
   products: [
-    .executable(name: "swiftgen", targets: ["SwiftGen"]),
-    .library(name: "SwiftGenCLI", targets: ["SwiftGenCLI"]),
-    .library(name: "SwiftGenKit", targets: ["SwiftGenKit"]),
+    .executable(name: "pxswiftgen", targets: ["SwiftGen"]),
+    .library(name: "PXSwiftGenCLI", targets: ["SwiftGenCLI"]),
+    .library(name: "PXSwiftGenKit", targets: ["SwiftGenKit"]),
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.1.3"),

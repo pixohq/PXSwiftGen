@@ -8,12 +8,11 @@ require 'yaml'
 namespace :dependencies do
   TOOLS = %w(SwiftLint)
 
-  desc 'Check if the DEPENDENCIES.md file and Package.swift + SwiftGenKit.podspec are in sync'
+  desc 'Check if the DEPENDENCIES.md file and Package.swift are in sync'
   # options: Use 'check[plain]' to avoid coloring and dashes. Useful for using in Dangerfile.
   task :check, [:plain] do |_, args|
     spm_deps = File.open('Package.swift').grep(/\.package\(url: ".+\/(.+?)\.git", .+\)/) { Regexp.last_match(1) }
-    swiftgenkit_deps = Utils.podspec_as_json('SwiftGenKit')['dependencies'].keys
-    all_core_deps = (TOOLS + spm_deps + swiftgenkit_deps).uniq
+    all_core_deps = (TOOLS + spm_deps).uniq
     documented_deps = File.open('DEPENDENCIES.md').grep(/### (.*)/) { Regexp.last_match(1) }
 
     missing_deps = (all_core_deps - documented_deps).sort

@@ -1,179 +1,96 @@
-# SwiftGen
+# PXSwiftGen
 
-[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SwiftGen.svg)](https://img.shields.io/cocoapods/v/SwiftGen.svg)
-[![Platform](https://img.shields.io/cocoapods/p/SwiftGen.svg?style=flat)](http://cocoadocs.org/docsets/SwiftGen)
 ![Swift 4.x](https://img.shields.io/badge/Swift-4.x-orange) ![Swift 5.x](https://img.shields.io/badge/Swift-5.x-orange)
 
-SwiftGen is a tool to automatically generate Swift code for resources of your projects (like images, localised strings, etc), to make them type-safe to use.
+\* PXSwiftGen은 SwiftGen을 Fork하여 만든 도구로, 프로젝트의 리소스(이미지, 현지화된 문자열 등)에 대한 Swift 코드를 자동으로 생성하여 타입 안전성을 보장합니다.
 
 <table border="0"><tr>
   <td>
     <img alt="SwiftGen Logo" src="https://github.com/SwiftGen/Eve/raw/master/logo/logo-256.png" />
   </td><td>
     <ul>
-        <li><a href="#installation">Installation</a>
-        <li><a href="#configuration-file">Configuration File</a>
-        <li><a href="#choosing-your-template">Choosing your template</a>
-        <li><a href="#additional-documentation">Additional documentation</a>
+        <li><a href="#installation">설치</a>
+        <li><a href="#configuration-file">설정 파일</a>
+        <li><a href="#choosing-your-template">템플릿 선택</a>
+        <li><a href="#additional-documentation">추가 문서</a>
     </ul>
-    Then generate constants for:
+    다음과 같은 상수를 생성할 수 있습니다:
     <ul>
-      <li><a href="#asset-catalog">Assets Catalogs</a>
-      <li><a href="#colors">Colors</a>
+      <li><a href="#asset-catalog">에셋 카탈로그</a>
+      <li><a href="#colors">색상</a>
       <li><a href="#core-data">Core Data</a>
-      <li><a href="#files">Files</a>
-      <li><a href="#fonts">Fonts</a>
-      <li><a href="#interface-builder">Interface Builder files</a>
-      <li><a href="#json-and-yaml">JSON and YAML files</a>
-      <li><a href="#plists">Plists</a>
-      <li><a href="#strings">Localizable strings</a>
+      <li><a href="#files">파일</a>
+      <li><a href="#fonts">폰트</a>
+      <li><a href="#interface-builder">Interface Builder 파일</a>
+      <li><a href="#json-and-yaml">JSON 및 YAML 파일</a>
+      <li><a href="#plists">Plist</a>
+      <li><a href="#strings">현지화 문자열</a>
     </ul>
   </td>
 </tr></table>
 
 <span style="float:none" />
 
-There are multiple benefits in using this:
+이 도구를 사용하면 다음과 같은 여러 이점이 있습니다:
 
-* Avoid any risk of typo when using a String
-* Free auto-completion
-* Avoid the risk of using a non-existing asset name
-* All this will be ensured by the compiler and thus avoid the risk of crashing at runtime.
+* 문자열 사용 시 오타 위험 방지
+* 자동 완성 기능 제공
+* 존재하지 않는 에셋 이름 사용 위험 방지
+* 컴파일러가 모든 것을 확인하므로 런타임 충돌 위험 방지
 
-Also, it's fully customizable thanks to Stencil templates, so even if it comes with predefined templates, you can make your own to generate whatever code fits your needs and your guidelines!
+또한 Stencil 템플릿 덕분에 완전히 사용자 정의가 가능하므로, 미리 정의된 템플릿이 제공되지만 필요에 맞게 자신만의 템플릿을 만들어 원하는 코드를 생성할 수 있습니다!
 
-## Installation
+## 설치
 
-There are multiple possibilities to install SwiftGen on your machine or in your project, depending on your preferences and needs:
+PXSwiftGen은 내부 사용을 위한 도구입니다. 다음과 같은 방법으로 설치할 수 있습니다:
 
-<details>
-<summary><strong>Download the ZIP</strong> for the latest release</summary>
+### 소스에서 빌드
 
-* [Go to the GitHub page for the latest release](https://github.com/SwiftGen/SwiftGen/releases/latest)
-* Download the `swiftgen-x.y.z.zip` file associated with that release
-* Extract the content of the zip archive in your project directory
-
-We recommend that you **unarchive the ZIP inside your project directory** and **commit its content** to git. This way, **all coworkers will use the same version of SwiftGen for this project**.
-
-If you unarchived the ZIP file in a folder e.g. called `swiftgen` at the root of your project directory, you can then invoke SwiftGen in your Script Build Phase using:
-
+1. 저장소를 클론합니다:
 ```sh
-"${PROJECT_DIR}/swiftgen/bin/swiftgen" …
+$ git clone https://github.com/pixohq/PXSwiftGen.git
+$ cd PXSwiftGen
 ```
 
----
-</details>
-<details>
-<summary>Via <strong>CocoaPods</strong></summary>
-
-If you're using CocoaPods, simply add `pod 'SwiftGen', '~> 6.0'` to your `Podfile`.
-
-Then execute `pod install --repo-update` (or `pod update SwiftGen` if you want to update an existing SwiftGen installation) to download and install the `SwiftGen` binaries and dependencies in `Pods/SwiftGen/bin/swiftgen` next to your project.
-
-Given that you can specify an exact version for `SwiftGen` in your `Podfile`, this allows you to ensure **all coworkers will use the same version of SwiftGen for this project**.
-
-You can then invoke SwiftGen in your Script Build Phase using:
-
+2. 바이너리를 빌드합니다:
 ```sh
-if [[ -f "${PODS_ROOT}/SwiftGen/bin/swiftgen" ]]; then
-  "${PODS_ROOT}/SwiftGen/bin/swiftgen" …
-else
-  echo "warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it."
-fi
+$ rake cli:build
 ```
 
-> Similarly, be sure to use `Pods/SwiftGen/bin/swiftgen` instead of just `swiftgen` where we mention commands with `swiftgen` in the rest of the documentation.
-
-_Note: SwiftGen isn't really a pod, as it's not a library your code will depend on at runtime; so the installation via CocoaPods is just a trick that installs the SwiftGen binaries in the Pods/ folder, but you won't see any swift files in the Pods/SwiftGen group in your Xcode's Pods.xcodeproj. That's normal; the SwiftGen binary is still present in that folder in the Finder._
-
----
-</details>
-<details>
-<summary>Via <strong>Homebrew</strong> <em>(system-wide installation)</em></summary>
-
-To install SwiftGen via [Homebrew](http://brew.sh), simply use:
-
+3. 바이너리를 설치합니다:
 ```sh
-$ brew update
-$ brew install swiftgen
-```
-
-This will install SwiftGen **system-wide**. The same version of SwiftGen will be used for all projects on that machine, and you should make sure all your coworkers have the same version of SwiftGen installed on their machine too.
-
-You can then invoke `swiftgen` directly in your Script Build Phase (as it will be in your `$PATH` already):
-
-```sh
-swiftgen … 
-```
-
----
-</details>
-<details>
-<summary>Via <strong>Mint</strong> <em>(system-wide installation)</em></summary>
-
-> ❗️SwiftGen 6.0 or higher only.
-
-To install SwiftGen via [Mint](https://github.com/yonaskolb/Mint), simply use:
-
-```sh
-$ mint install SwiftGen/SwiftGen
-```
----
-</details>
-<details>
-<summary><strong>Compile from source</strong> <em>(only recommended if you need features from the `stable` branch or want to test a PR)</em></summary>
-
-This solution is when you want to build and install the latest version from `stable` and have access to features which might not have been released yet.
-
-* If you have `homebrew` installed, you can use the following command to build and install the latest commit:
-
-```sh
-brew install swiftgen --HEAD
-```
-
-* Alternatively, you can clone the repository and use `rake cli:install` to build the tool and install it from any branch, which could be useful to test SwiftGen in a fork or a Pull Request branch.
-
-Some Ruby tools are used in the build process, and the system Ruby works well if you are running a recent macOS.  However, if you are using `rbenv` you can run `rbenv install` to make sure you have a matching version of Ruby installed.  
-
-Then install the Ruby Gems:
-
-```sh
-# Install bundle if it isn't installed
-gem install bundle
-# Install the Ruby gems from Gemfile
-bundle install
-```
-
-You can now install to the default locations (no parameter) or to custom locations:
-
-```sh
-# Binary is installed in `./.build/swiftgen/bin`
 $ rake cli:install
-# - OR -
-# Binary will be installed in `~/swiftgen/bin``
-$ rake cli:install[~/swiftgen/bin]
 ```
 
-You can then invoke SwiftGen using the path to the binary where you installed it:
+이렇게 하면 `.build/pxswiftgen/bin/` 디렉토리에 바이너리가 설치됩니다.
+
+### 프로젝트에 직접 추가
+
+프로젝트 디렉토리에 PXSwiftGen을 추가하고 빌드 스크립트에서 사용할 수 있습니다:
 
 ```sh
-~/swiftgen/bin/swiftgen …
+# 빌드 스크립트에서
+"${PROJECT_DIR}/path/to/pxswiftgen/bin/pxswiftgen" ...
 ```
 
-Or add the path to the `bin` folder to your `$PATH` and invoke `swiftgen` directly.
+## 설정 파일
 
----
-</details>
+PXSwiftGen은 YAML 설정 파일을 사용하여 여러 리소스 유형에 대한 코드 생성을 구성할 수 있습니다:
 
-### Known Installation Issues On macOS Before 10.14.4
+```yaml
+strings:
+  inputs: Resources/Localizable.strings
+  outputs:
+    - templateName: structured-swift5
+      output: Generated/Strings.swift
+xcassets:
+  inputs: Resources/Assets.xcassets
+  outputs:
+    - templateName: swift5
+      output: Generated/Assets.swift
+```
 
-Starting with [SwiftGen 6.2.1](https://github.com/SwiftGen/SwiftGen/releases/6.2.1), if you get an error similar to `dyld: Symbol not found: _$s11SubSequenceSlTl` when running SwiftGen, you'll need to install the [Swift 5 Runtime Support for Command Line Tools](https://support.apple.com/kb/DL1998).
-
-Alternatively, you can:
-
-- Update to macOS 10.14.4 or later
-- Install Xcode 10.2 or later at `/Applications/Xcode.app`
-- Rebuild SwiftGen from source using Xcode 10.2 or later
+자세한 내용은 문서를 참조하세요.
 
 ## Configuration File
 

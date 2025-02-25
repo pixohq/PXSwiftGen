@@ -1,4 +1,4 @@
-name: Publish on Tag
+name: 내부 배포용 빌드
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  cocoapods:
-    name: Push To CocoaPods
+  build:
+    name: PXSwiftGen 빌드
     runs-on: macos-12
     steps:
       -
@@ -20,7 +20,6 @@ jobs:
         with:
           bundler-cache: true
       - 
-        # Need SPM cache because we're building & uploading a binary
         name: Cache SPM
         uses: actions/cache@v3
         with:
@@ -29,12 +28,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm-
       -
-        name: Create release on GitHub
-        run: bundle exec rake release:github
-        env:
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.danger_github_api_token }}
+        name: 바이너리 빌드
+        run: bundle exec rake cli:build
       -
-        name: Push to CocoaPods
-        run: bundle exec rake release:cocoapods
-        env:
-          COCOAPODS_TRUNK_TOKEN: ${{secrets.COCOAPODS_TRUNK_TOKEN}}
+        name: 아티팩트 생성
+        run: bundle exec rake release:zip
+      -
+        name: 아티팩트 업로드
+        uses: actions/upload-artifact@v3
+        with:
+          name: pxswiftgen-binary
+          path: .build/pxswiftgen-*.zip
+          retention-days: 30

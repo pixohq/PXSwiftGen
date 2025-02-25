@@ -1,8 +1,26 @@
-# SwiftGen CHANGELOG
+# PXSwiftGen CHANGELOG
 
 ---
 
-## 6.6.3
+## 1.0.0
+
+### Breaking Changes
+
+* 프로젝트 이름을 SwiftGen에서 PXSwiftGen으로 변경했습니다.
+* 바이너리 이름을 `swiftgen`에서 `pxswiftgen`으로 변경했습니다.
+* Pod 관련 코드를 모두 제거했습니다.
+
+### New Features
+
+_None_
+
+### Bug Fixes
+
+_None_
+
+---
+
+## 6.6.3 (SwiftGen 원본)
 
 ### Breaking Changes
 
@@ -933,7 +951,7 @@ Read the [SwiftGen 5.0 Migration Guide](Documentation/MigrationGuide.md#migratin
 
 ### New Features
 
-* Colors and strings commands now accept multiple input files. With these 2 additions, all swiftgen generator commands are able to handle multiple input files.  
+* Colors and strings commands now accept multiple input files. With these 2 additions, all swiftgen generator commands are able to handle multiple input files.  
   [David Jennes](https://github.com/djbe)
   [#313](https://github.com/SwiftGen/SwiftGen/issues/313)
   [SwiftGen/SwiftGenKit#40](https://github.com/SwiftGen/SwiftGenKit/issues/40)
