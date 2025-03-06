@@ -35,8 +35,8 @@ namespace :cli do
 
     bindir = Pathname.new(args.bindir).expand_path
     actual_build_dir = args.universal ? "#{BUILD_DIR}/apple/Products/Release" : "#{BUILD_DIR}/release"
-    generated_binary_path = "#{actual_build_dir}/swiftgen"
-    generated_bundle_path = "#{actual_build_dir}/SwiftGen_SwiftGenCLI.bundle"
+    generated_binary_path = "#{actual_build_dir}/pxswiftgen"
+    generated_bundle_path = "#{actual_build_dir}/PXSwiftGen_SwiftGenCLI.bundle"
 
     Utils.print_header "바이너리 설치 중: #{bindir}"
     Utils.run([
