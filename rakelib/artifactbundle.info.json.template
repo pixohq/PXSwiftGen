@@ -1,12 +1,12 @@
 {
     "schemaVersion": "1.0",
     "artifacts": {
-        "swiftgen": {
+        "pxswiftgen": {
             "type": "executable",
             "version": "VERSION",
             "variants": [
                 {
-                    "path": "swiftgen/bin/swiftgen",
+                    "path": "pxswiftgen/bin/pxswiftgen",
                     "supportedTriples": ["x86_64-apple-macosx", "arm64-apple-macosx"]
                 },
             ]
