@@ -129,10 +129,10 @@ namespace :release do
     # Create (or update) release
     puts "Pushing release notes for tag #{version}"
     begin
-      release = client.release_for_tag("YourOrganization/#{repo_name}", version)
+      release = client.release_for_tag("pixohq/#{repo_name}", version)
       client.update_release(release.url, tag_name: version, name: version, body: body)
     rescue Octokit::NotFound
-      release = client.create_release("YourOrganization/#{repo_name}", version, name: version, body: body)
+      release = client.create_release("pixohq/#{repo_name}", version, name: version, body: body)
     end
 
     # Upload our artifacts
