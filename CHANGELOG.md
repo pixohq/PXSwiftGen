@@ -19,6 +19,7 @@ _None_
 _None_
 
 ---
+
 ## 1.0.1
 * artifact bundle의 info.json 정보를 수정했습니다.
 
@@ -29,3 +30,16 @@ _None_
 ### Bug Fixes
 
 * artifact bundle의 info.json 정보를 수정했습니다.
+
+---
+
+## 1.0.2
+* develop 변경사항을 stable에 push했어요
+
+### New Features
+
+_None_
+
+### Bug Fixes
+
+_None_
