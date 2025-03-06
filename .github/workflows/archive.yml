@@ -23,10 +23,10 @@ jobs:
         name: Verify installation
         run: bundle exec rake cli:install[./standalone,./standalone/frameworks,./standalone/stencils]
       -
-        name: Check swiftgen binary
+        name: Check pxswiftgen binary
         run: |
-            ./standalone/swiftgen --version
-            ./standalone/swiftgen templates list
+            ./standalone/pxswiftgen --version
+            ./standalone/pxswiftgen templates list
       -
         name: Test binary output
         run: bundle exec rake cli:test[./standalone,./standalone/frameworks,./standalone/stencils]
@@ -58,5 +58,5 @@ jobs:
         name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SwiftGen.zip
-          path: .build/swiftgen-*.zip
+          name: PXSwiftGen.zip
+          path: .build/pxswiftgen-*.zip
