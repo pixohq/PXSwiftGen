@@ -20,7 +20,7 @@ end
 
 namespace :release do
   desc 'Create a new release on GitHub'
-  task :new => [:check_versions, :confirm, 'spm:test', :github]
+  task :new => [:check_versions, :confirm, :github]
 
   desc 'Check if all versions from the CHANGELOG match'
   task :check_versions do
