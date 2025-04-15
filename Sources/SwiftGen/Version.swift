@@ -5,8 +5,8 @@
 //
 
 enum Version {
-  static let swiftgen = "1.0.4"
-  static let swiftGenKit = "1.0.4"
+  static let swiftgen = "1.1.0"
+  static let swiftGenKit = "1.1.0"
   static let stencil = "0.15.1"
   static let stencilSwiftKit = "2.10.1"
 }

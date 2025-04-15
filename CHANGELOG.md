@@ -1,5 +1,16 @@
 # PXSwiftGen CHANGELOG
 
+## 1.1.0
+* String Catalog (XCStrings)를 지원합니다.
+
+### New Features
+
+_None_
+
+### Bug Fixes
+
+---
+
 ## 1.0.4
 * PXSwiftGenPlugin을 수정했습니다
 
